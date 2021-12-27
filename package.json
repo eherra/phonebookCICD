@@ -8,7 +8,8 @@
     "dev": "nodemon index.js",
     "build": "rm -rf build && cd phonebook-frontend && npm run build --prod && cp -r build ../build",
     "lint": "eslint .",
-    "test:e2e": "cypress run"
+    "test:e2e": "cypress run",
+    "postinstall": "cd phonebook-frontend && npm install && cd .."
   },
   "author": "Elias",
   "license": "MIT",
