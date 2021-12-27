@@ -22,6 +22,11 @@ app.get('/api/persons', (request, response, next) => {
     .catch(error => next(error))
 })
 
+// health check for Heroku
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
+
 app.get('/info', (request, response, next) => {
   const date = new Date().toString()
   Person.find({})
@@ -102,7 +107,7 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 
 // eslint-disable-next-line no-undef
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
