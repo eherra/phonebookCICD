@@ -17,9 +17,17 @@ jobs:
         with:
           node-version: '12.x'
       - name: npm install 
-        run: npm install  
+        run: npm install && cd phonebook-frontend && npm install && cd ..  
       - name: lint
         run: npm run lint
+      - name: e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: http://localhost:3001
+      - name: build
+        run: npm run build
       - uses: actions/checkout@v2
       - name: Bump version and push tag
         if: ${{ github.event_name == 'push' }}
@@ -27,4 +35,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-
