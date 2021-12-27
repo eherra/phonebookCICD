@@ -6,7 +6,7 @@ import Notification from './components/Notification'
 import personService from './services/persons'
 
 const App = () => {
-  const [persons, setPersons] = useState([]) 
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
@@ -27,13 +27,11 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-  
+
     if (persons.some( person => person['name'] === newName )) {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with new one?`)) {
         const person = persons.find(person => person.name === newName)
-        
-        const changedPerson = { ...person, number: newNumber}
-        
+        const changedPerson = { ...person, number: newNumber }
         personService
           .update(changedPerson.id, changedPerson)
           .then(returnedData => {
@@ -41,7 +39,7 @@ const App = () => {
             setIsError(false)
             handleNotificationShow(`Updated ${returnedData.name}`)
           })
-      } 
+      }
       setNewName('')
       setNewNumber('')
       return
@@ -86,19 +84,19 @@ const App = () => {
   }
 
   const handlePersonDelete = (person) => {
-      if (window.confirm(`Are you sure you want to delete ${person.name}`)) {
-        personService
-          .remove(person.id)
-          .then(returnedPerson => {
-            setPersons(persons.filter(n => n.id !== person.id))
-            setIsError(false)
-            handleNotificationShow(`Deleted ${person.name}`)
-          }).catch(error => {
-            setIsError(true)
-            handleNotificationShow(`Information of '${person.name}' has already been removed from server`)
-            setPersons(persons.filter(n => n.id !== person.id))
-          })
-      }
+    if (window.confirm(`Are you sure you want to delete ${person.name}`)) {
+      personService
+        .remove(person.id)
+        .then(returnedPerson => {
+          setPersons(persons.filter(n => n.id !== person.id))
+          setIsError(false)
+          handleNotificationShow(`Deleted ${person.name}`)
+        }).catch(error => {
+          setIsError(true)
+          handleNotificationShow(`Information of '${person.name}' has already been removed from server`)
+          setPersons(persons.filter(n => n.id !== person.id))
+        })
+    }
   }
 
   return (
@@ -107,17 +105,16 @@ const App = () => {
       <Notification message={notificationMessage} isError={isError}/>
       <Filter value={newFilter} handleChange={handleFilterChange}/>
       <h2>Add a new</h2>
-      <PersonForm 
-        submit={addPerson} 
-        newName={newName} 
-        newNumber={newNumber} 
+      <PersonForm
+        submit={addPerson}
+        newName={newName}
+        newNumber={newNumber}
         handleNameChange={handleNameChange}
         handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
       <Persons personsToShow={personsToShow} handlePersonDelete={handlePersonDelete}/>
     </div>
   )
-
 }
 
 export default App
