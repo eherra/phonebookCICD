@@ -6,12 +6,14 @@
   "scripts": {
     "start-prod": "node index.js",
     "dev": "nodemon index.js",
-    "lint": "eslint ."
+    "build": "rm -rf build && cd phonebook-frontend && npm run build --prod && cp -r build ../build",
+    "lint": "eslint .",
+    "test:e2e": "cypress open"
   },
   "author": "Elias",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.1.0",
+    "cypress": "^9.2.0",
     "nodemon": "^2.0.14"
   },
   "dependencies": {

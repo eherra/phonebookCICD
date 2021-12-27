@@ -8,7 +8,7 @@ const Person = require('./models/person')
 app.use(express.json())
 app.use(cors())
 
-// using the front end via build
+// using the frontend via build file
 app.use(express.static('build'))
 
 // eslint-disable-next-line no-unused-vars
